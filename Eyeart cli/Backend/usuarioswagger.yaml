@@ -1,0 +1,266 @@
+openapi: 3.0.1
+info:
+  title: API de E&E ART.
+  description: Esta API se ancarga de manejar la informacion de la empresa E&E ART.
+  version: 1.0.0
+servers:
+- url: http://localhost:4200/
+tags:
+- name: Usuario
+  description: Maneja la informacion de los Usuario de E&E ART.
+
+paths:
+
+  /usuarios:
+    post:
+      tags:
+      - Usuario
+      summary: Inserta informacion de nuevo Usuario en la base de datos
+      parameters:
+      - $ref: '#/components/parameters/token'
+  
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BodyUsuarioPost'
+        required: true
+      responses:
+        200:
+          description: (OK) La informacion del Usuario se guardo correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExitoUsuariosPost'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+    
+  /usuarios/{idUsuario}:
+    get:
+      tags:
+      - Usuario
+      summary: Obtiene la infomaciÃ²n de la base de datos de un Usuario.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: idUsuario
+        in: path
+        description: Identificador del Usuario a obtener
+        required: true
+        schema:
+          type: string
+        
+      responses:
+        200:
+          description: (OK) La informaciÃ³n del Usuario se obtuvo correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExitoUsuariosGet'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  
+  /actualiza/{idUsuario}:
+    put:
+      tags:
+      - Usuario
+      summary: Actualiza la informacion de un Usuario en la base de datos.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: idUsuario
+        in: path
+        description: Identificador del cliente a obtener
+        required: true
+        schema:
+          type: string
+          
+      requestBody:
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BodyUsuariosPut'
+        
+      responses:
+        200:
+          description: (OK) La informaciÃ³n del cliente se actualizÃ³ correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExitoUsuariosPost'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+          
+  /borrar/{idUsuario}:
+    delete:
+      tags:
+        - Usuario
+      summary: Elimina logicamente a un Usuario.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: idUsuario
+        in: path
+        description: Identificador del Usuario a obtener
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: (OK) El Usuario se eliminÃ³ correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExitoUsuariosPost'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  
+components:
+  responses:
+    
+    Unauthorized:
+      description: (Unauthorized) No hay autorizaciÃ³n para llamar al servicio
+    
+    NotFound:
+      description: (NotFound) No se encontrÃ³ informaciÃ³n 
+    
+    BadRequest:
+      description: (Bad Request) Los datos enviados son incorrectos o hay datos obligatorios no enviados
+      
+    ServerError:
+      description: Error en servidor
+        
+
+  parameters:
+    token:
+      in: header
+      name: token
+      description: Token de autenticaciÃ³n en API.
+      required: true
+      schema:
+        type: string
+    
+
+  schemas:
+
+    BodyUsuarioPost:
+      type: object
+      properties:
+        Nombre:
+          type: string
+          description: Nombre del Usuario
+        Apellido:
+          type: string
+          description: Apellido del Usuario
+        NumeroDocumento:
+          type: string
+          description: NumeroDocumento paterno del Usuario
+        Direccion:
+          type: string
+          description: Direccion materno del Usuario
+        Telefono:
+          type: string
+          description: Telefono del Usuario
+        Correo:
+          type: string
+          description: Correo del Usuario
+        TipoDocumento_idTipoDocumento:
+          type: integer
+          description: TipoDocumento del Usuario
+        Ciudad_idCiudad:
+          type: integer
+          description: Ciudad del Usuario
+      
+  
+    ExitoUsuariosPost:
+      type: object
+      properties:
+        respuesta:
+          type: integer
+          enum: [1]
+          description: Bandera que nos dice si la llamada al servicio fue satisfactoria
+        idCliente: 
+          type: integer
+          enum: [233]
+          description: Id correspondiente al Usuario
+          
+          
+    ExitoUsuariosGet:
+      type: object
+      properties:
+        respuesta:
+          type: integer
+          enum: [1]
+          description: Bandera que nos dice si la llamada al servicio fue satisfactoria
+        Nombre:
+          type: string
+          description: Nombre del Usuario
+        Apellido:
+          type: string
+          description: Apellido del Usuario
+        NumeroDocumento:
+          type: string
+          description: NumeroDocumento paterno del Usuario
+        Direccion:
+          type: string
+          description: Direccion materno del Usuario
+        Telefono:
+          type: string
+          description: Telefono del Usuario
+        Correo:
+          type: string
+          description: Correo del Usuario
+        Contrasena:
+          type: string
+          description: Contraseña del Usuario para entrar al sistema
+        
+          
+    BodyUsuariosPut:
+      type: object
+      properties:
+        Nombre:
+          type: string
+          description: Nombre del Usuario
+        Apellido:
+          type: string
+          description: Apellido del Usuario
+        NumeroDocumento:
+          type: string
+          description: NumeroDocumento paterno del Usuario
+        Direccion:
+          type: string
+          description: Direccion materno del Usuario
+        Telefono:
+          type: string
+          description: Telefono del Usuario
+        Correo:
+          type: string
+          description: Correo del Usuario
+        TipoDocumento_idTipoDocumento:
+          type: integer
+          description: TipoDocumento del Usuario
+        Ciudad_idCiudad:
+          type: integer
+          description: Ciudad del Usuario
+          
