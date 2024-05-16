@@ -10,7 +10,7 @@ function Register(app){
         const query = `SELECT a.idUsuario, a.Nombre, a.Apellido, a.NumeroDocumento , a.Direccion, a.Telefono, a.Correo, a.Contrasena,
         b.Descripcion as Documento, c.Descripcion as Ciudad
         FROM ${moduleName} a , tipodocumento b 
-        JOIN Ciudad c
+        JOIN ciudad c
         WHERE a.Ciudad_idCiudad = c.idCiudad  AND a.TipoDocumento_idTipoDocumento = b.idTipoDocumento
         ORDER BY idUsuario asc;  `
         conexion.query(query, (error, resultado) => {
