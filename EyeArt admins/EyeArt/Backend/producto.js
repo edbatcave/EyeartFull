@@ -6,7 +6,7 @@ function RegisterProducto(app){
         console.log('ejecutando query');
         const query = `SELECT a.idProducto , a.Nombre, a.DescripcionProducto, 
         a.Precio, a.Stock, a.url_foto ,b.Descripcion 
-        FROM ${moduleName} a , Categoria b
+        FROM ${moduleName} a , categoria b
         WHERE a.Categoria_idCategoria = b.idCategoria
         ORDER BY idProducto asc;`
         conexion.query(query, (error, resultado) => {
