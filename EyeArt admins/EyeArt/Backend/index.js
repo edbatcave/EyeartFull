@@ -23,10 +23,11 @@ const swaggerUi = require('swagger-ui-express');
 
 const mysql = require('mysql2');
     conexion = mysql.createConnection({
-    host:'localhost',
+    host:'monorail.proxy.rlwy.net',
+    port: '57852',
     database:'eye',
     user:'root',
-    password:''
+    password:'rLrPXjVruEJPvCgsvTDFzrgneDOctqFq'
 })
 
 
