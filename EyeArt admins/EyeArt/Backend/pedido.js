@@ -6,7 +6,7 @@ function RegisterPedido(app){
     app.get(`/${moduleName}`, (req, res) => {
         console.log('ejecutando query');
         const query = `SELECT a.idPedido, CAST(Fecha AS CHAR(10)) AS Fecha, a.CodigoReferencia, a.Cantidad , a.Total, a.MetodoPago_idMetodoPago, b.Descripcion FROM ${moduleName} a 
-        JOIN  metodoPago b ON a.MetodoPago_idMetodoPago = b.idMetodoPago`
+        JOIN  metodopago b ON a.MetodoPago_idMetodoPago = b.idMetodoPago`
         conexion.query(query, (error, resultado) => {
             if(error) return console.error(error.message)
     
@@ -22,7 +22,7 @@ function RegisterPedido(app){
     app.get(`/${moduleName}/:id`,(req,res)=>{
         const {id} = req.params;
         const query = `SELECT a.idPedido, CAST(Fecha AS CHAR(10)) AS Fecha, a.CodigoReferencia, a.Cantidad , a.Total, a.MetodoPago_idMetodoPago, b.Descripcion FROM ${moduleName} a 
-        JOIN  metodoPago b ON a.MetodoPago_idMetodoPago = b.idMetodoPago  WHERE idPedido=${id}`;
+        JOIN  metodopago b ON a.MetodoPago_idMetodoPago = b.idMetodoPago  WHERE idPedido=${id}`;
         conexion.query(query, (error, resultado)=>{
             if(error) return console.error(error.message)
     
