@@ -63,6 +63,7 @@ function RegisterProducto(app){
             DescripcionProducto: req.body.DescripcionProducto,
             Precio: req.body.Precio,
             Stock: req.body.Stock,
+            url_foto: req.body.url_foto,
             Categoria_idCategoria: req.body.Categoria_idCategoria
             
         }
