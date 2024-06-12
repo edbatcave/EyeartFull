@@ -27,7 +27,7 @@ function RegisterProducto(app){
         a.Precio, a.Stock, a.url_foto ,b.Descripcion 
         FROM ${moduleName} a , categoria b
         WHERE a.Categoria_idCategoria = b.idCategoria
-        ORDER BY RAND() LIMIT 3;`
+        ORDER BY RAND();`
         conexion.query(query, (error, resultado) => {
             if(error) return console.error(error.message)
     
