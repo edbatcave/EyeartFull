@@ -17,8 +17,7 @@ function Register(app){
             if(error) return console.error(error.message)
     
             if(resultado.length > 0) {
-                res.json(resultado)
-                console.log(resultado); 
+                res.json(resultado); 
             }else{
                 res.json('No hay registros')
             }
@@ -34,7 +33,6 @@ function Register(app){
             if(error) return console.error(error.message)
     
             if(resultado.length > 0){
-                console.log(resultado); 
             res.json(resultado);
             }else{
                 res.json('No hay registros con ese ID')
