@@ -82,9 +82,9 @@ function RegisterProducto(app){
 // -- ACTUALIZAR PRODUCTO --
     app.put(`/${moduleName}/editar/:id`,(req,res)=>{
         const {id} = req.params;
-        const {Nombre, DescripcionProducto, Precio, Stock, url_foto, Categoria_idCategoria} = req.body;
-        const query = `UPDATE ${moduleName} SET Nombre = '${Nombre}', DescripcionProducto = '${DescripcionProducto}' , Precio = '${Precio}',
-        Stock = '${Stock}', url_foto = '${url_foto}', Categoria_idCategoria = '${Categoria_idCategoria}' WHERE idProducto=${id}`;
+        const {Nombre, DescripcionProducto, DescripcionExtendida, Precio, Stock, url_foto, url_foto2, url_foto3, url_foto4, Categoria_idCategoria} = req.body;
+        const query = `UPDATE ${moduleName} SET Nombre = '${Nombre}', DescripcionProducto = '${DescripcionProducto}' ,DescripcionExtendida='${DescripcionExtendida}', Precio = '${Precio}',
+        Stock = '${Stock}', url_foto = '${url_foto}', url_foto2 = '${url_foto2}', url_foto3 = '${url_foto3}', url_foto4 = '${url_foto4}', Categoria_idCategoria = '${Categoria_idCategoria}' WHERE idProducto=${id}`;
         conexion.query(query, (error, resultado)=>{
             if(error) return console.error(error.message)   
     
