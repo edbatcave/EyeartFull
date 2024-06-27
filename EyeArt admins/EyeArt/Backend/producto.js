@@ -61,9 +61,13 @@ function RegisterProducto(app){
         const producto = {
             Nombre: req.body.Nombre,
             DescripcionProducto: req.body.DescripcionProducto,
+            DescripcionExtendida: req.body.DescripcionExtendida,
             Precio: req.body.Precio,
             Stock: req.body.Stock,
             url_foto: req.body.url_foto,
+            url_foto2: req.body.url_foto2,
+            url_foto3: req.body.url_foto3,
+            url_foto4: req.body.url_foto4,
             Categoria_idCategoria: req.body.Categoria_idCategoria
             
         }
