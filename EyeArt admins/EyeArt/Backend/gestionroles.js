@@ -1,15 +1,16 @@
-const moduleName = "gestionroles"
+const moduleName = "roles_usuarios"
 
 
 // -- LISTAR GESTION ROLES --
 function RegisterGestionRoles(app){
     app.get(`/${moduleName}`, (req, res) => {
         console.log('ejecutando query');
-        const query = `SELECT a.Usuario_idUsuario, a.Rol_idRol, CONCAT(b.Nombre, ' ', b.Apellido) AS Nombre , c.Descripcion
-        FROM ${moduleName} a , Usuario b
-        JOIN Rol c
-        WHERE  a.Usuario_idUsuario = b.idUsuario AND a.Rol_idRol = c.idRol 
-        ORDER BY idUsuario asc;`
+        const query = `SELECT a.idUsuario, b.Nombre, b.Apellido, 
+        COALESCE(c.Descripcion, 'Cliente') as Rol 
+        FROM eye.${moduleName} a  
+        LEFT JOIN usuario b ON a.idUsuario = b.idUsuario 
+        LEFT JOIN rol c ON a.idRol = c.idRol
+        ORDER BY a.idUsuario;`
         conexion.query(query, (error, resultado) => {
             if(error) return console.error(error.message)
     
@@ -24,11 +25,12 @@ function RegisterGestionRoles(app){
 // -- LISTAR MEDIANTE ID --
     app.get(`/${moduleName}/:Usuario_idUsuario`,(req,res)=>{
         const {Usuario_idUsuario} = req.params;
-        const query = `SELECT a.Usuario_idUsuario, a.Rol_idRol, CONCAT(b.Nombre, ' ', b.Apellido) AS Nombre
-        FROM ${moduleName} a 
-        JOIN Usuario b
-        ON  a.Usuario_idUsuario = b.idUsuario
-        WHERE Usuario_idUsuario = ${Usuario_idUsuario};`;
+        const query = `SELECT a.idUsuario, b.Nombre, b.Apellido, 
+        COALESCE(c.Descripcion, 'Cliente') as Rol 
+        FROM eye.roles_usuarios a  
+        LEFT JOIN usuario b ON a.idUsuario = b.idUsuario 
+        LEFT JOIN rol c ON a.idRol = c.idRol WHERE a.idUsuario = ${Usuario_idUsuario}
+        ORDER BY a.idUsuario;`;
         conexion.query(query, (error, resultado)=>{
             if(error) return console.error(error.message)
     
@@ -45,8 +47,8 @@ function RegisterGestionRoles(app){
 app.post(`/${moduleName}/agregar`,(req,res)=>{
         
     const gestionroles = {
-        Usuario_idUsuario: req.body.Usuario_idUsuario,
-        Rol_idRol: req.body.Rol_idRol
+        idUsuario: req.body.idUsuario,
+        idRol: req.body.idRol
     }
     const query = `INSERT INTO ${moduleName} SET ?`;
     conexion.query(query, gestionroles, (error, resultado)=>{
@@ -58,9 +60,9 @@ app.post(`/${moduleName}/agregar`,(req,res)=>{
 
 // -- ACTUALIZAR GESTION ROLES --
     app.put(`/${moduleName}/editar/:Usuario_idUsuario`,(req,res)=>{
-        const {Usuario_idUsuario} = req.params;
-        const {Rol_idRol} = req.body;
-        const query = `UPDATE ${moduleName} SET Rol_idRol = '${Rol_idRol}' WHERE Usuario_idUsuario= ${Usuario_idUsuario}`;
+        const {idUsuario} = req.params;
+        const {idRol} = req.body;
+        const query = `UPDATE ${moduleName} SET Rol_idRol = '${idRol}' WHERE Usuario_idUsuario= ${idUsuario}`;
         conexion.query(query, (error, resultado)=>{
             if(error) return console.error(error.message)   
     
@@ -71,8 +73,8 @@ app.post(`/${moduleName}/agregar`,(req,res)=>{
 
 // -- ELIMINAR GESTION ROLES --
     app.delete(`/${moduleName}/borrar/:Usuario_idUsuario`,(req,res)=>{
-        const {Usuario_idUsuario} = req.params;
-        const query = `DELETE FROM ${moduleName} WHERE Usuario_idUsuario=${Usuario_idUsuario}`;
+        const {idUsuario} = req.params;
+        const query = `DELETE FROM ${moduleName} WHERE Usuario_idUsuario=${idUsuario}`;
         conexion.query(query, (error, resultado)=>{
             if(error) return console.error(error.message)
     
