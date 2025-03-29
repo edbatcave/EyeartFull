@@ -25,7 +25,7 @@ const swaggerUi = require("swagger-ui-express");
 
 const mysql = require("mysql2");
 conexion = mysql.createConnection({
-  host: "maglev.proxy.rlwy.net:",
+  host: "maglev.proxy.rlwy.net",
   port: "50583",
   database: "railway",
   user: "root",
